@@ -17,15 +17,12 @@
 
 <script>
     function addSumData (data){
-      var tbl = document.getElementById("tbl1");
-      var lbl = document.createElement("label");
-      lbl.className = "ui label";
+      var tbl = document.getElementById("sumresult");
       if(data.isvalid){
-        lbl.innerText = data.msg;
+        tbl.innerText = data.msg;
       } else {
-        lbl.innerText = 'not valid type';
+        tbl.innerText = 'not valid type';
       }      
-      tbl.append(lbl);
     }
 
     function addFileData (data){
@@ -54,7 +51,15 @@
                             return;
                         }
                         response.text().then(
-                          txt => addSumData(JSON.parse(txt))
+                          txt => {
+                            var data = JSON.parse(txt);
+                            var tbl = document.getElementById("sumresult");
+                            if(data.isvalid){
+                              tbl.innerText = data.msg;
+                            } else {
+                            tbl.innerText = 'not valid type';
+      }
+                          }
                           );
                     }
                 )
@@ -150,7 +155,7 @@
           </form>
 
         </h2 class="ui header">
-        <div id="tbl1"></div>
+        <div><p id="sumresult">result</p></div>
     </div>
     <br>
 

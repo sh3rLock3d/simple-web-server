@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>front</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<script>
+    function sumnode(){
+        const data = { 'first-num': document.getElementById("num1").value, 'second-num': document.getElementById("num2").value };
+        fetch('http://localhost:3000/nodejs/sha256', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+        })
+        .then(
+            function (response) {
+                if (response.status !== 200) {
+                    console.log('there is a problem ' + response.status);
+                        return;
+                }
+                response.text().then(
+                    txt => {
+                        var backres = JSON.parse(txt);
+                        var tbl = document.getElementById("sumresult");
+                        if(backres.isvalid){
+                              tbl.innerText = backres.msg;
+                        } else {
+                            tbl.innerText = 'not valid type';
+                        }
+                    }
+                );
+           }
+        )
+        .catch(function (err) {
+                    console.log('Fetch Error :-S', err);
+        });
+    }
+
+    function sumgo(){
+
+    }
+
+    function writenode(){
+        console.log(document.getElementById("line").value);
+        fetch(
+            'http://localhost:3000/nodejs/write?line=' + document.getElementById("line").value,
+            { method: 'GET' }
+        )
+        .then(
+            function (response) {
+                if (response.status !== 200) {
+                    console.log('there is a problem ' + response.status);
+                        return;
+                }
+                 response.text().then(
+                    txt => {
+                        var backres = JSON.parse(txt);
+                        var tbl = document.getElementById("lineresult");
+                        tbl.innerText = backres.msg;
+                    }
+                );
+            }
+        )
+        .catch(function (err) {
+            console.log('Fetch Error :-S', err);
+        });
+    }
+
+    function writego(){
+
+    }
+
+</script>
+
+
+</head>
+<body>
+
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+
+<div class="ui form">
+    <div class="field">
+        <label>First Number</label>
+        <input type="number" name="first-number" placeholder="First Number" required id="num1">
+
+        <label>Second Number</label>
+        <input type="number" name="second-name" placeholder="Second Number" required id="num2">
+    </div>
+    <button onclick="sumnode()" class="ui primary button">
+        node
+    </button>
+    <button onclick="sumgo()" class="ui primary button">
+        go
+    </button>
+    <br>
+    <p id="sumresult"></p>
+</div>
+
+
+<div class="ui form">
+    <div class="field">
+        <label>Line Number</label>
+        <input type="number" name="line-number" placeholder="Line Number Of File" min="0" max="99" required id="line">
+    </div>
+    <button onclick="writenode()" class="ui primary button">
+        node
+    </button>
+    <button onclick="writego()" class="ui primary button">
+        go
+    </button>
+    <br>
+    <p id="lineresult"></p>
+</div>
+
+
+
+
+</body>
+</html>

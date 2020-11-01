@@ -67,8 +67,8 @@ func shahandling(w http.ResponseWriter, r *http.Request)  {
 	if err := json.Unmarshal(reqBody, &dat); err != nil {
         panic(err)
 	}
-	var t1 = dat["1"].(string)
-	var t2 = dat["2"].(string)
+	var t1 = dat["first-num"].(string)
+	var t2 = dat["second-num"].(string)
 	n1, err := strconv.ParseInt(t1, 10, 64)
 	n2, err := strconv.ParseInt(t2, 10, 64)
 	n1 = n1 + n2
@@ -79,7 +79,7 @@ func shahandling(w http.ResponseWriter, r *http.Request)  {
 	hash.Write([]byte(s))
 	md := hash.Sum(nil)
 	mdStr := hex.EncodeToString(md)
-	res := Out{"Ali", mdStr}
+	res := Out{msg: mdStr, isvalid:1}
 
   	js, err := json.Marshal(res)
   	if err != nil {
