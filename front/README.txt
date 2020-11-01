@@ -1,4 +1,4 @@
-#FRONTEND
+# FRONTEND
 we used semantic-ui css for our front, we get the `css file` by:
 ```
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.css"/>
