@@ -1,0 +1,8 @@
+● node-app.service - node-app
+   Loaded: loaded (/usr/lib/systemd/system/node-app.service; enabled; vendor preset: disabled)
+   Active: activating (auto-restart) (Result: exit-code) since Mon 2020-11-02 00:09:03 +0330; 865ms ago
+  Process: 2600 ExecStart=/home/simple-web-server/nodejs/index.js [0;1;31m(code=exited, status=203/EXEC)[0m
+ Main PID: 2600 (code=exited, status=203/EXEC)
+
+Nov 02 00:09:03 WebServer systemd[1]: [0;1;39m[0;1;31m[0;1;39mnode-app.service: Main process exited, code=exited, status=203/EXEC[0m
+Nov 02 00:09:03 WebServer systemd[1]: [0;1;39m[0;1;31m[0;1;39mnode-app.service: Failed with result 'exit-code'.[0m
