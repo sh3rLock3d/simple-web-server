@@ -63,7 +63,28 @@
                 });
     }
     function onSumGoClick(){
-
+      const data = { 'first-num': document.getElementById("num1").value, 'second-num': document.getElementById("num2").value };
+            fetch('http://localhost:3000/go/sha256', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(
+                    function (response) {
+                        if (response.status !== 200) {
+                            console.log('there is a problem ' + response.status);
+                            return;
+                        }
+                        response.text().then(
+                          txt => addSumData(JSON.parse(txt))
+                          );
+                    }
+                )
+                .catch(function (err) {
+                    console.log('Fetch Error :-S', err);
+                });
     }
 
     function onFileNodeClick(){
@@ -88,7 +109,23 @@
 
 
     function onFileGoClick(){
-
+      console.log(document.getElementById("line").value);
+      fetch('http://localhost:3000/go/write?line=' + document.getElementById("line").value,
+       { method: 'GET' })
+                .then(
+                  function (response) {
+                        if (response.status !== 200) {
+                            console.log('there is a problem ' + response.status);
+                            return;
+                        }
+                        response.text().then(
+                          txt => addFileData(JSON.parse(txt))
+                          );
+                    }
+                )
+                .catch(function (err) {
+                    console.log('Fetch Error :-S', err);
+                });
     }
 </script>
 
