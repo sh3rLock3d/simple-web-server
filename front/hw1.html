@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Frontend</title>
+  <meta name="description" content="frontend example">
+  <meta name="author" content="yumcoder">
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.css"/>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.js"></script>
+
+</head>
+
+<script>
+    function addSumData (data){
+      var tbl = document.getElementById("tbl1");
+      var lbl = document.createElement("label");
+      lbl.className = "ui label";
+      if(data.isvalid){
+        lbl.innerText = data.msg;
+      } else {
+        lbl.innerText = 'not valid type';
+      }      
+      tbl.append(lbl);
+    }
+
+    function addFileData (data){
+      console.log(data.msg);
+      var tbl = document.getElementById("tbl2");
+      var lbl = document.createElement("label");
+      lbl.className = "ui label";
+      lbl.innerText = data.msg;
+      console.log(data.msg);
+      tbl.append(lbl);
+    }
+
+    function onSumNodeClick(){
+      const data = { 'first-num': document.getElementById("num1").value, 'second-num': document.getElementById("num2").value };
+            fetch('http://localhost:3000/nodejs/sha256', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(
+                    function (response) {
+                        if (response.status !== 200) {
+                            console.log('there is a problem ' + response.status);
+                            return;
+                        }
+                        response.text().then(
+                          txt => addSumData(JSON.parse(txt))
+                          );
+                    }
+                )
+                .catch(function (err) {
+                    console.log('Fetch Error :-S', err);
+                });
+    }
+    function onSumGoClick(){
+
+    }
+
+    function onFileNodeClick(){
+      console.log(document.getElementById("line").value);
+      fetch('http://localhost:3000/nodejs/write?line=' + document.getElementById("line").value,
+       { method: 'GET' })
+                .then(
+                  function (response) {
+                        if (response.status !== 200) {
+                            console.log('there is a problem ' + response.status);
+                            return;
+                        }
+                        response.text().then(
+                          txt => addFileData(JSON.parse(txt))
+                          );
+                    }
+                )
+                .catch(function (err) {
+                    console.log('Fetch Error :-S', err);
+                });
+    }
+
+
+    function onFileGoClick(){
+
+    }
+</script>
+
+<body>
+    <br>
+    <div class="ui raised inverted very padded text container segment">
+        <h2 class="ui inverted header">
+            <label>Sum Of Two Number</label>
+          <form class="ui inverted form">
+            <div style="display: flex; justify-content: space-between; " class="ui input focus">
+            <div class="field">
+              <label>First Number</label>
+              <input type="number" name="first-number" placeholder="First Number" required id="num1">
+            </div>
+            <div class="field">
+              <label>Second Number</label>
+              <input type="number" name="second-name" placeholder="Second Number" required id="num2">
+            </div>
+            </div>
+            <button class="ui purple button" type="submit" onclick="onSumNodeClick()">Node</button>
+            <button class="ui purple button" type="submit" onclick="onSumGoClick()">Go</button>
+          </form>
+
+        </h2 class="ui header">
+        <div id="tbl1"></div>
+    </div>
+    <br>
+
+    <div class="ui raised inverted very padded text container segment">
+        <h2 class="ui inverted header">
+            <label>Line Of File</label>
+            <form class="ui inverted form">
+            <div class="field">
+              <label>Line Number</label>
+              <input type="number" name="line-number" placeholder="Line Number Of File" min="0" max="99" required id="line">
+            </div>
+            <button class="ui purple button" type="submit" onclick="onFileNodeClick()">Node</button>
+            <button class="ui purple button" type="submit" onclick="onFileGoClick()">Go</button>
+          </form>
+        </h2 class="ui header">
+        <div id="tbl2"></div>
+    </div>
+
+</body>
+</html>

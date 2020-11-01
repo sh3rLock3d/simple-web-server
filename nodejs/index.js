@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 var cors = require('cors')
 const { response } = require('express')
+
 const port = 3000
 const crypto = require('crypto');
 app.use(express.json());
@@ -13,11 +14,21 @@ app.use(cors())
 
 
 app.get('/nodejs/write', (req, res) => {
-    // is it better using https://stackoverflow.com/questions/34730586/read-nth-line-in-node-js-without-reading-entire-file
-    console.log('hello ')
-    var line = 1 // todo find how?
-    console.log(tmp)
-    res.json({msg: 'not implemented yet'})
+    var line_number = req.query.line;
+    if (isNaN(line_number)){
+        return res.status(400).end('type is not correct');
+    }
+    line_number = line_number - 1;
+    if (line_number < 1 || line_number > 100){
+        return res.status(400).end('number is out of index');
+    }
+    console.log(line_number);
+    const nthline = require('nthline'),
+    filePath = '/home/ali/Desktop/simple-web-server/nodejs/file-data.txt',
+    rowIndex = line_number;
+    nthline(rowIndex, filePath).then(line => {console.log(line); res.json({msg: line});});
+    
+    
 })
 
 app.post('/nodejs/sha256', function (req, res) {
@@ -43,9 +54,6 @@ app.post('/nodejs/sha256', function (req, res) {
 
     }
     res.json({msg: result, isvalid:isnumber})
-
-    
-
 })
 
 app.listen(port, () => {console.log(`Example app listening at http://localhost:${port}`)})
