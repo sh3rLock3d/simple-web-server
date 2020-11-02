@@ -1,22 +1,22 @@
 package main
 
-import(
-	"fmt"
-	"net/http"
-	"encoding/json"
-	"io/ioutil"
-	"log"
-	"strconv"
+import (
+	"bufio"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
 	"os"
-	"bufio"
+	"strconv"
 )
 
 type Out struct {
-	Name    string
-	Result	string
-  }
+	Name   string
+	Result string
+}
 
 func readNthLine(file string, n int) string {
 	f, err := os.Open(file)
@@ -31,24 +31,20 @@ func readNthLine(file string, n int) string {
 	return line
 }
 
-
-
-
-func writehandling(w http.ResponseWriter, r *http.Request)  {
+func writehandling(w http.ResponseWriter, r *http.Request) {
 	//TODO check wether it is a get or not
 	keys, ok := r.URL.Query()["line"]
-    if !ok || len(keys[0]) < 1 {
-        log.Println("Url Param 'key' is missing")
-        return
-    }
+	if !ok || len(keys[0]) < 1 {
+		log.Println("Url Param 'key' is missing")
+		return
+	}
 	key := keys[0]
-	//input number is ready
 	if n, err := strconv.Atoi(key); err == nil {
-		mydir, err := os.Getwd() 
-    	if err != nil { 
-        	fmt.Println(err) 
-    	} 
-		line := readNthLine(mydir + "/test.txt", n)
+		mydir, err := os.Getwd()
+		if err != nil {
+			fmt.Println(err)
+		}
+		line := readNthLine(mydir+"/test.txt", n)
 		fmt.Println(line)
 		w.Write([]byte(line))
 	} else {
@@ -56,19 +52,27 @@ func writehandling(w http.ResponseWriter, r *http.Request)  {
 	}
 }
 
-func shahandling(w http.ResponseWriter, r *http.Request)  {
+func shahandling(w http.ResponseWriter, r *http.Request) {
 	//TODO check wether it is a post or not
+	fmt.Println("Sha handleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...")
 	reqBody, err := ioutil.ReadAll(r.Body)
-    if err != nil {
-        log.Fatal(err)
-    }
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Printf("%s\n", reqBody)
 	var dat map[string]interface{}
 	if err := json.Unmarshal(reqBody, &dat); err != nil {
-        panic(err)
+		panic(err)
 	}
-	var t1 = dat["first-num"].(string)
-	var t2 = dat["second-num"].(string)
+	fmt.Println("Sha handllllllllllllllllllllllllllllllllllllllllllllllllllll...")
+	fmt.Println(dat["1"])
+	fmt.Println("Sha handllllllllllllllllllllllllllllllllllllllllllllllllllll...")
+	var t1 = dat["1"].(string)
+	fmt.Println("Sha handllllllllllllllllllllllllllllllllllllllllllllllllllll...")
+	var t2 = dat["2"].(string)
+	fmt.Println(t1)
+	fmt.Println(t2)
+
 	n1, err := strconv.ParseInt(t1, 10, 64)
 	n2, err := strconv.ParseInt(t2, 10, 64)
 	n1 = n1 + n2
@@ -79,18 +83,18 @@ func shahandling(w http.ResponseWriter, r *http.Request)  {
 	hash.Write([]byte(s))
 	md := hash.Sum(nil)
 	mdStr := hex.EncodeToString(md)
-	res := Out{msg: mdStr, isvalid:1}
+	res := Out{"Ali", mdStr}
 
-  	js, err := json.Marshal(res)
-  	if err != nil {
-    	http.Error(w, err.Error(), http.StatusInternalServerError)
-    	return
-  	}
-  	w.Header().Set("Content-Type", "application/json")
-  	w.Write(js)
+	js, err := json.Marshal(res)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
 
-func main()  {
+func main() {
 	fmt.Println("Starting a web server...")
 	http.HandleFunc("/go/sha256", shahandling)
 	http.HandleFunc("/go/write/", writehandling)
