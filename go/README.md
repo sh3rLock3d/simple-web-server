@@ -14,5 +14,6 @@ import (
 at end for use this back enter this command in terminal:
 ```
 $ go run main.go
+$ go build main.go
 ```
 
