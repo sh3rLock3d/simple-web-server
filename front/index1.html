@@ -80,43 +80,53 @@
 </head>
 <body>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+    <h1>Web Programming HW1</h1>
 
-<div class="ui form">
-    <div class="field">
-        <label>First Number</label>
-        <input type="number" name="first-number" placeholder="First Number" required id="num1">
-
-        <label>Second Number</label>
-        <input type="number" name="second-name" placeholder="Second Number" required id="num2">
+    <div class="ui raised inverted very padded text container segment">
+    <div class="ui form">
+        <div class="field">
+            <h2 class="ui inverted header">
+            <div class="inline">
+            <div class="ui inverted">
+            <label>First Number</label>
+            <input type="number" name="first-number" placeholder="First Number" required id="num1">
+            </div>
+            <div class="ui inverted">
+            <label>Second Number</label>
+            <input type="number" name="second-name" placeholder="Second Number" required id="num2">
+            </div>
+            </div>
+            </h2>
+        </div>
+        <button onclick="sumnode()" class="ui primary button">
+            node
+        </button>
+        <button onclick="sumgo()" class="ui primary button">
+            go
+        </button>
+        <br>
+        <p id="sumresult"></p>
     </div>
-    <button onclick="sumnode()" class="ui primary button">
-        node
-    </button>
-    <button onclick="sumgo()" class="ui primary button">
-        go
-    </button>
-    <br>
-    <p id="sumresult"></p>
-</div>
-
-
-<div class="ui form">
-    <div class="field">
-        <label>Line Number</label>
-        <input type="number" name="line-number" placeholder="Line Number Of File" min="0" max="99" required id="line">
     </div>
-    <button onclick="writenode()" class="ui primary button">
-        node
-    </button>
-    <button onclick="writego()" class="ui primary button">
-        go
-    </button>
-    <br>
-    <p id="lineresult"></p>
-</div>
-
+    
+    <div class="ui raised inverted very padded text container segment">
+    <div class="ui form">
+        <div class="field">
+            <h2 class="ui inverted header">
+            <label>Line Number</label>
+            <input type="number" name="line-number" placeholder="Line Number Of File" min="0" max="99" required id="line">
+            </h2>
+        </div>
+        <button onclick="writenode()" class="ui purple button">
+            node
+        </button>
+        <button onclick="writego()" class="ui purple button">
+            go
+        </button>
+        <br>
+        <p id="lineresult"></p>
+    </div>
+    </div>
 
 
 
