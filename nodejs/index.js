@@ -24,7 +24,7 @@ app.get('/nodejs/write', (req, res) => {
     }
     console.log(line_number);
     const nthline = require('nthline'),
-    filePath = '/home/esmaeil/Desktop/web/HW1_web/simple-web-server/nodejs/file-data.txt',
+    filePath = '/home/web-server/simple-web-server/nodejs/file-data.txt',
     rowIndex = line_number;
     nthline(rowIndex, filePath).then(line => {console.log(line); res.json({msg: line});});
     

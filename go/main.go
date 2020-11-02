@@ -98,5 +98,5 @@ func main() {
 	fmt.Println("Starting a web server...")
 	http.HandleFunc("/go/sha256", shahandling)
 	http.HandleFunc("/go/write/", writehandling)
-	http.ListenAndServe(":3000", nil)
+	http.ListenAndServe(":8000", nil)
 }

@@ -1,0 +1,14 @@
+[Unit]
+Description=node-app
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=2s
+#Environment=PORT=80
+ExecStart=/usr/bin/node /home/web-server/simple-web-server/nodejs/index.js
+
+[Install]
+WantedBy=multi-user.target
+
+

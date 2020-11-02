@@ -9,7 +9,7 @@
 <script>
     function sumnode(){
         const data = { 'first-num': document.getElementById("num1").value, 'second-num': document.getElementById("num2").value };
-        fetch('http://localhost:3000/nodejs/sha256', {
+        fetch('http://192.168.1.12:3000/nodejs/sha256', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,7 +47,7 @@
     function writenode(){
         console.log(document.getElementById("line").value);
         fetch(
-            'http://localhost:3000/nodejs/write?line=' + document.getElementById("line").value,
+            'http://192.168.1.12:3000/nodejs/write?line=' + document.getElementById("line").value,
             { method: 'GET' }
         )
         .then(

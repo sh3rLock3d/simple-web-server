@@ -1,0 +1,13 @@
+[Unit]
+Description=go-app
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=2s
+#Environment=PORT=80
+#Environment=GIN_MODE=release
+ExecStart=/home/web-server/simple-web-server/go/main
+
+[Install]
+WantedBy=multi-user.target
